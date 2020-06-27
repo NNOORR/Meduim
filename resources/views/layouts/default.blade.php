@@ -17,6 +17,9 @@
     <?php  \Illuminate\Support\Facades\Session::remove('error_message') ?>
 @endif
 
+
+
 @yield('extra_content')
 
 @stop
+

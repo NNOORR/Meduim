@@ -4,7 +4,7 @@
 
 <p>Articles Index</p>
 <!-- Button trigger modal -->
-<a class="btn btn-primary btn-lg" href="/admin/articles/create">Add Article</a>
+<a class="btn btn-primary btn-md m-1" href="/admin/articles/create">Add Article</a>
 
 
 <table id="example1" class="table table-bordered table-hover">
@@ -16,6 +16,14 @@
         <td class="col-sm-1">Author</td>
         <td class="col-sm-1">Preview count</td>
         <td class="col-md-3">Options</td>
+    </tr>
+    <tr class="row">
+        <td class="col-sm-1"><input type="number" name="id" class="col-sm-12"  /></td>
+        <td class="col-sm-1"><input type="text" name="title" class="col-sm-12" /></td>
+        <td class="col-sm-1"><input type="text" name="brief" class="col-sm-12" /></td>
+        <td class="col-sm-3"><input type="text" name="description" class="col-sm-12" /></td>
+        <td class="col-sm-1"><input type="text" name="author" class="col-sm-12" /></td>
+        <td class="col-sm-1"><input type="number" name="preview_count" class="col-sm-12" /></td>
     </tr>
     @foreach($articles as $article)
         <tr class="row">

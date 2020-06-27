@@ -25,10 +25,10 @@ class ArticlesController extends BaseController
 
     }
 
-    public function store(Request $data)
+    public function store(Request $request)
     {
        try {
-           $data = $data->request->all();
+           $data = $request->request->all();
             $errors = (new ArticleValidator())->validate($data);
             if (count($errors))
             {
@@ -42,6 +42,12 @@ class ArticlesController extends BaseController
             }
 
             $article = Article::saveRecord($data,true);
+
+            // Get uploaded images ..
+           $imgs = $request->allFiles(); ['articleImgs'];
+           foreach ($imgs as $img){
+               $path = $img->store('uploads');
+           }
 
             if($article)
                 Session::flash('flash_message', 'New article added Successfully');
