@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Exceptions\UserException;
 use App\Models\Attachment;
 use App\Models\Author;
+use App\Models\Tag;
 use App\Validators\ArticleValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -60,7 +61,13 @@ class ArticlesController extends BaseController
 
                 // Manipulate and Save Tags
                 $tags = $data['tags'];
-
+                $tags = explode(',', $tags);
+                foreach ($tags as $tag){
+                    Tag::saveRecord([
+                        'article_id' => $article->id,
+                        'name' => $tag
+                    ], true);
+                }
 
                 Session::flash('flash_message', 'New article added Successfully');
             }

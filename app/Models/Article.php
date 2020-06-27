@@ -35,6 +35,10 @@ class Article extends Model
         return $this->hasMany(Attachment::class);
     }
 
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 
     /**
      * @param array $data
