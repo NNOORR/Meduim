@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Exceptions\UserException;
+use App\Models\Attachment;
 use App\Models\Author;
 use App\Validators\ArticleValidator;
 use Illuminate\Http\Request;
@@ -12,64 +13,70 @@ use Illuminate\Support\Facades\Session;
 
 class ArticlesController extends BaseController
 {
-    function index() {
-         $articles = Article::getArticles();
+    function index()
+    {
+        $articles = Article::getArticles();
         return view('pages.articles.index', compact('articles'));
     }
 
 
     public function create(Article $article)
     {
-          $authors = Author::all();
-          return view('pages.articles.create', compact('authors'));
+        $authors = Author::all();
+        return view('pages.articles.create', compact('authors'));
 
     }
 
-    public function store(Request $request)
+    public function store(Request $req)
     {
-       try {
-           $data = $request->request->all();
+        try {
+
+
+            $data = $req->request->all();
             $errors = (new ArticleValidator())->validate($data);
-            if (count($errors))
-            {
+            if (count($errors)) {
                 $err = array();
-                foreach ($errors->toArray() as $error)  {
-                    foreach($error as $sub_error){
+                foreach ($errors->toArray() as $error) {
+                    foreach ($error as $sub_error) {
                         array_push($err, $sub_error);
                     }
                 }
-                throw new UserException(implode(',',$err));
+                throw new UserException(implode(',', $err));
             }
 
-            $article = Article::saveRecord($data,true);
+            $article = Article::saveRecord($data, true);
 
-            // Get uploaded images ..
-           $imgs = $request->allFiles(); ['articleImgs'];
-           foreach ($imgs as $img){
-               $path = $img->store('uploads');
-           }
 
-            if($article)
+            if ($article) {
+                // Get uploaded images ..
+                $imgs = $req->allFiles()['articleImgs'];
+                foreach ($imgs as $img) {
+                    $path = $img->store('uploads');
+                    Attachment::saveRecord([
+                        'article_id' => $article->id,
+                        'path' => $path
+                    ], true);
+                }
+
+
+
+
                 Session::flash('flash_message', 'New article added Successfully');
+            }
 
-
-           $articles = Article::getArticles();
-           return view('pages.articles.index', compact('articles'));
-        }
-        catch (UserException $e)
-        {
-            return $this->output(false,$e->getMessage(),$e->getCode(),[]);
-        }
-
-        catch (\Throwable $e)
-        {
+            $articles = Article::getArticles();
+            return view('pages.articles.index', compact('articles'));
+        } catch (UserException $e) {
+            return $this->output(false, $e->getMessage(), $e->getCode(), []);
+        } catch (\Throwable $e) {
             return $this->exceptionOutput($e);
         }
 
     }
 
 
-    function delete($id){
+    function delete($id)
+    {
         try {
             $article = Article::find($id);
             if (is_null($article))
@@ -80,9 +87,7 @@ class ArticlesController extends BaseController
 
             $articles = Article::getArticles();
             return view('pages.articles.index', compact('articles'));
-        }
-        catch (\Throwable $e)
-        {
+        } catch (\Throwable $e) {
             return $this->exceptionOutput($e);
         }
     }
@@ -111,7 +116,7 @@ class ArticlesController extends BaseController
             if (is_null($article))
                 Session::flash('error_message', 'Article not found!');
 
-            Article::saveRecord($article,false);
+            Article::saveRecord($article, false);
             Session::flash('flash_message', 'Article deleted successfully');
 
             $articles = Article::getArticles();

@@ -30,10 +30,15 @@ class Article extends Model
         return $this->belongsTo(Author::class);
     }
 
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
+
 
     /**
      * @param array $data
-     * @return Location
+     * @return Article
      */
     public static function saveRecord($data,$insert)
     {
