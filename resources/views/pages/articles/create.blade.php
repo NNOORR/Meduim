@@ -37,23 +37,6 @@
         <input type="text" name="tags" value="" class="form-control" id="inputBrief"  placeholder="Enter some tags, separate them by comma" required>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-
-            <select class="mdb-select colorful-select dropdown-primary md-form" multiple searchable="Search here..">
-                <option value="" disabled selected>Choose your country</option>
-                <option value="1">USA</option>
-                <option value="2">Germany</option>
-                <option value="3">France</option>
-                <option value="4">Poland</option>
-                <option value="5">Japan</option>
-            </select>
-            <label class="mdb-main-label">Label example</label>
-            <button class="btn-save btn btn-primary btn-sm">Save</button>
-
-        </div>
-    </div>
-
 
     <button type="submit" class="btn btn-primary m-5">Submit</button>
 </form>

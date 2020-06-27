@@ -58,7 +58,8 @@ class ArticlesController extends BaseController
                     ], true);
                 }
 
-
+                // Manipulate and Save Tags
+                $tags = $data['tags'];
 
 
                 Session::flash('flash_message', 'New article added Successfully');

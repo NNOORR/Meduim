@@ -21,6 +21,7 @@ class CreateArticlesTable extends Migration
             $table->integer('author_id');
             $table->foreign('author_id')->references('author')->on('id');
             $table->integer('preview_count')->default(0);
+            $table->index('preview_count');
             $table->timestamps();
         });
     }

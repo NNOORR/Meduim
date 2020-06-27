@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
              NationalitySeeder::class,
              AuthorSeeder::class,
              ArticleSeeder::class,
+             TagSeeder::class,
+             AttachmentSeeder::class,
          ]);
     }
 }
