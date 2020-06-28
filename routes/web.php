@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/admin', function () {
     return view('pages.master-page');
 });
 
@@ -23,3 +23,4 @@ Route::get('admin/articles/create', 'ArticlesController@create');
 Route::post('admin/articles/store', 'ArticlesController@store');
 Route::get('admin/articles/delete/{id}', 'ArticlesController@delete');
 Route::get('admin/articles/edit/{id}', 'ArticlesController@edit');
+Route::get('/{any}', 'SpaController@index')->where('any', '.*');
