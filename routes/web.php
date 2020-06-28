@@ -23,4 +23,5 @@ Route::get('admin/articles/create', 'ArticlesController@create');
 Route::post('admin/articles/store', 'ArticlesController@store');
 Route::get('admin/articles/delete/{id}', 'ArticlesController@delete');
 Route::get('admin/articles/edit/{id}', 'ArticlesController@edit');
+Route::get('admin/articles/view/{id}', 'ArticlesController@view');
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

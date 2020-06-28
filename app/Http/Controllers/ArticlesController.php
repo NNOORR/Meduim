@@ -134,4 +134,29 @@ class ArticlesController extends BaseController
         }
     }
 
+    public function View($id)
+    {
+        // Get the article ..
+        $article = Article::find($id);
+
+        if(is_null($article)) {
+            Session::flash('error_message', 'Article not found!');
+            return redirect()->back();
+        }
+
+        $labelClasses = [
+            'badge badge-primary',
+            'badge badge-secondary',
+            'badge badge-success',
+            'badge badge-danger',
+            'badge badge-warning',
+            'badge badge-info',
+            'badge badge-dark'
+        ];
+
+        $faker = \Faker\Factory::create();
+
+        return view('pages.articles.view', compact('article', 'labelClasses', 'faker'));
+    }
+
 }

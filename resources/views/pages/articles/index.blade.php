@@ -7,16 +7,20 @@
 <a class="btn btn-primary btn-md m-1" href="/admin/articles/create">Add Article</a>
 
 
-<table id="example1" class="table table-bordered table-hover">
-    <tr class="row">
-        <td class="col-sm-1">#</td>
-        <td class="col-sm-1">Title</td>
-        <td class="col-sm-1">Brief</td>
-        <td class="col-sm-3">Desc</td>
-        <td class="col-sm-1">Author</td>
-        <td class="col-sm-1">Preview count</td>
-        <td class="col-md-3">Options</td>
-    </tr>
+<table id="example1" class="table shadow p-3 mb-5 bg-white rounded">
+    <thead class="thead-dark " >
+        <tr class="row" >
+            <th class="col-sm-1" scope="col">#</th>
+            <th class="col-sm-1" scope="col">Title</th>
+            <th class="col-sm-1" scope="col">Brief</th>
+            <th class="col-sm-3" scope="col">Desc</th>
+            <th class="col-sm-1" scope="col">Author</th>
+            <th class="col-sm-1" scope="col">Preview count</th>
+            <th class="col-md-3" scope="col">Options</th>
+            <th class="col-sm-1"></th>
+        </tr>
+  </thead>
+    <tbody>
     <tr class="row">
         <td class="col-sm-1"><input type="number" name="id" class="col-sm-12"  /></td>
         <td class="col-sm-1"><input type="text" name="title" class="col-sm-12" /></td>
@@ -24,6 +28,7 @@
         <td class="col-sm-3"><input type="text" name="description" class="col-sm-12" /></td>
         <td class="col-sm-1"><input type="text" name="author" class="col-sm-12" /></td>
         <td class="col-sm-1"><input type="number" name="preview_count" class="col-sm-12" /></td>
+        <td class="col-md-3" ></td>
     </tr>
     @foreach($articles as $article)
         <tr class="row">
@@ -40,5 +45,6 @@
             </td>
         </tr>
     @endforeach
+    </tbody>
 </table>
 @stop
