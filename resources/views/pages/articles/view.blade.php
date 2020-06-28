@@ -45,7 +45,7 @@
         <a href="/admin/articles" class="btn btn-primary">Go Back</a>
         <hr/>
         @foreach($article->tags as $key => $tag)
-            <span class="{{ $labelClasses[$faker->numberBetween(0, 100) % count($labelClasses)]}}">{{ $tag->name }}</span>
+            <span class="{{ \Illuminate\Support\Facades\Config::get('constants.badges')[\Faker\Factory::create()->numberBetween(0, 100) % count(\Illuminate\Support\Facades\Config::get('constants.badges'))]}}">{{ $tag->name }}</span>
         @endforeach
     </div>
 </div>

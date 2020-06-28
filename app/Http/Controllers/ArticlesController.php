@@ -11,9 +11,13 @@ use App\Models\Tag;
 use App\Validators\ArticleValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ArticlesController extends BaseController
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     function index()
     {
         $articles = Article::getArticles();
@@ -21,6 +25,10 @@ class ArticlesController extends BaseController
     }
 
 
+    /**
+     * @param Article $article
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create(Article $article)
     {
         $authors = Author::all();
@@ -28,10 +36,13 @@ class ArticlesController extends BaseController
 
     }
 
+    /**
+     * @param Request $req
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|void
+     */
     public function store(Request $req)
     {
         try {
-
 
             $data = $req->request->all();
             $errors = (new ArticleValidator())->validate($data);
@@ -52,7 +63,7 @@ class ArticlesController extends BaseController
                 // Get uploaded images ..
                 $imgs = $req->allFiles()['articleImgs'];
                 foreach ($imgs as $img) {
-                    $path = $img->store('uploads');
+                    $path = $img->store('public/uploads');
                     Attachment::saveRecord([
                         'article_id' => $article->id,
                         'path' => $path
@@ -72,8 +83,8 @@ class ArticlesController extends BaseController
                 Session::flash('flash_message', 'New article added Successfully');
             }
 
-            $articles = Article::getArticles();
-            return view('pages.articles.index', compact('articles'));
+            $article = Article::find($article->id);
+            return view('pages.articles.view', compact('article'));
         } catch (UserException $e) {
             return $this->output(false, $e->getMessage(), $e->getCode(), []);
         } catch (\Throwable $e) {
@@ -82,7 +93,10 @@ class ArticlesController extends BaseController
 
     }
 
-
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     function delete($id)
     {
         try {
@@ -93,14 +107,16 @@ class ArticlesController extends BaseController
             $article->delete();
             Session::flash('flash_message', 'Article deleted successfully');
 
-            $articles = Article::getArticles();
-            return view('pages.articles.index', compact('articles'));
+            return redirect('admin/articles');
         } catch (\Throwable $e) {
             return $this->exceptionOutput($e);
         }
     }
 
-
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     function edit($id)
     {
         try {
@@ -109,32 +125,91 @@ class ArticlesController extends BaseController
             if (is_null($article))
                 Session::flash('error_message', 'Article not found!');
 
-            return view('pages.articles.create', compact('article', 'authors'));
+            $tags= '';
+            foreach ($article->tags as $key => $tag){
+                if($key > 0)
+                    $tags .= ',';
+                $tags .= $tag->name;
+            }
+            return view('pages.articles.create', compact('article', 'authors', 'tags'));
 
         } catch (\Throwable $e) {
             return $this->exceptionOutput($e);
         }
     }
 
-
-    function update($id)
+    /**
+     * @param Request $req
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|void
+     */
+    public function update(Request $req, $id)
     {
         try {
-            $article = Article::find($id);
-            if (is_null($article))
-                Session::flash('error_message', 'Article not found!');
 
-            Article::saveRecord($article, false);
-            Session::flash('flash_message', 'Article deleted successfully');
+            $data = $req->request->all();
+            $data['id'] = $id;
 
-            $articles = Article::getArticles();
-            return view('pages.articles.index', compact('articles'));
+            $errors = (new ArticleValidator())->validate($data);
+            if (count($errors)) {
+                $err = array();
+                foreach ($errors->toArray() as $error) {
+                    foreach ($error as $sub_error) {
+                        array_push($err, $sub_error);
+                    }
+                }
+                throw new UserException(implode(',', $err));
+            }
+
+            // update article ..
+            $article = Article::saveRecord($data, false);
+
+
+            if ($article) {
+                // delete article's tags
+                $article->tags()->delete();
+                // delete article attachments
+                $article->attachments()->delete();
+
+
+                // Get uploaded images ..
+                $imgs = $req->allFiles()['articleImgs'];
+                foreach ($imgs as $img) {
+                    $path = $img->store('public/uploads');
+                    Attachment::saveRecord([
+                        'article_id' => $id,
+                        'path' => $path
+                    ], true);
+                }
+
+                // Manipulate and Save Tags
+                $tags = $data['tags'];
+                $tags = explode(',', $tags);
+                foreach ($tags as $tag){
+                    Tag::saveRecord([
+                        'article_id' => $id,
+                        'name' => $tag
+                    ], true);
+                }
+
+                Session::flash('flash_message', 'Article updated Successfully');
+            }
+
+            $article = Article::find($article->id);
+            return view('pages.articles.view', compact('article'));
+        } catch (UserException $e) {
+            return $this->output(false, $e->getMessage(), $e->getCode(), []);
         } catch (\Throwable $e) {
             return $this->exceptionOutput($e);
         }
+
     }
 
-    public function View($id)
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function display($id)
     {
         // Get the article ..
         $article = Article::find($id);
@@ -144,19 +219,7 @@ class ArticlesController extends BaseController
             return redirect()->back();
         }
 
-        $labelClasses = [
-            'badge badge-primary',
-            'badge badge-secondary',
-            'badge badge-success',
-            'badge badge-danger',
-            'badge badge-warning',
-            'badge badge-info',
-            'badge badge-dark'
-        ];
-
-        $faker = \Faker\Factory::create();
-
-        return view('pages.articles.view', compact('article', 'labelClasses', 'faker'));
+        return view('pages.articles.view', compact('article'));
     }
 
 }
