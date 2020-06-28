@@ -11,12 +11,13 @@ use App\Models\Nationality;
 use App\Models\Tag;
 use App\Validators\ArticleValidator;
 use App\Validators\AuthorValidator;
+use App\Validators\NationalityValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
-class AuthorsController extends BaseController
+class NationalitiesController extends BaseController
 {
 
     /**
@@ -24,8 +25,8 @@ class AuthorsController extends BaseController
      */
     function index()
     {
-        $authors = Author::getAuthors();
-        return view('pages.authors.index', compact('authors'));
+        $nationalities = Nationality::getNationalities();
+        return view('pages.nationalities.index', compact('nationalities'));
     }
 
 
@@ -34,8 +35,7 @@ class AuthorsController extends BaseController
      */
     public function create()
     {
-        $nationalities = Nationality::all();
-        return view('pages.authors.create', compact('nationalities'));
+        return view('pages.nationalities.create');
 
     }
 
@@ -48,7 +48,7 @@ class AuthorsController extends BaseController
         try {
 
             $data = $req->request->all();
-            $errors = (new AuthorValidator())->validate($data);
+            $errors = (new NationalityValidator())->validate($data);
             if (count($errors)) {
                 $err = array();
                 foreach ($errors->toArray() as $error) {
@@ -59,10 +59,10 @@ class AuthorsController extends BaseController
                 throw new UserException(implode(',', $err));
             }
 
-            Author::saveRecord($data, true);
+            Nationality::saveRecord($data, true);
 
-            Session::flash('flash_message', 'New author added Successfully');
-            return redirect('admin/authors');
+            Session::flash('flash_message', 'New nationality added Successfully');
+            return redirect('admin/nationalities');
 
         } catch (UserException $e) {
             return $this->output(false, $e->getMessage(), $e->getCode(), []);
@@ -79,14 +79,14 @@ class AuthorsController extends BaseController
     function delete($id)
     {
         try {
-            $author = Author::find($id);
-            if (is_null($author))
-                Session::flash('error_message', 'Author not found!');
+            $nationality = Nationality::find($id);
+            if (is_null($nationality))
+                Session::flash('error_message', 'Nationality not found!');
 
-            $author->delete();
-            Session::flash('flash_message', 'Author deleted successfully');
+            $nationality->delete();
+            Session::flash('flash_message', 'Nationality deleted successfully');
 
-            return redirect('admin/authors');
+            return redirect('admin/nationalities');
         } catch (\Throwable $e) {
             return $this->exceptionOutput($e);
         }
@@ -99,12 +99,11 @@ class AuthorsController extends BaseController
     function edit($id)
     {
         try {
-            $author = Author::find($id);
-            $nationalities = Nationality::all();
-            if (is_null($author))
-                Session::flash('error_message', 'Author not found!');
+            $nationality = Nationality::find($id);
+            if (is_null($nationality))
+                Session::flash('error_message', 'Nationality not found!');
 
-            return view('pages.authors.create', compact('author', 'nationalities'));
+            return view('pages.nationalities.create', compact('nationality'));
 
         } catch (\Throwable $e) {
             return $this->exceptionOutput($e);
@@ -123,7 +122,7 @@ class AuthorsController extends BaseController
             $data = $req->request->all();
             $data['id'] = $id;
 
-            $errors = (new AuthorValidator())->validate($data);
+            $errors = (new NationalityValidator())->validate($data);
             if (count($errors)) {
                 $err = array();
                 foreach ($errors->toArray() as $error) {
@@ -134,13 +133,13 @@ class AuthorsController extends BaseController
                 throw new UserException(implode(',', $err));
             }
 
-            // update author ..
-            $author = Author::saveRecord($data, false);
+            // update nationality ..
+            $nationality = Nationality::saveRecord($data, false);
 
 
-            if ($author) {
-                Session::flash('flash_message', 'Author updated Successfully');
-                return redirect('admin/authors');
+            if ($nationality) {
+                Session::flash('flash_message', 'Nationality updated Successfully');
+                return redirect('admin/nationalities');
             }
         } catch (UserException $e) {
             return $this->output(false, $e->getMessage(), $e->getCode(), []);

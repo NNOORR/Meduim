@@ -9,6 +9,11 @@ class ErrorsLog extends Model
     protected $table = 'errors_log';
     protected $fillable = ['message','file', 'line','trace','err_code'];
 
+    static function getErrosLog(){
+        return ErrorsLog::all()->sortDesc();
+    }
+
+
     /**
      * @param \Throwable $e
      * @return int|mixed

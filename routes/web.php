@@ -25,4 +25,37 @@ Route::get('admin/articles/delete/{id}', 'ArticlesController@delete');
 Route::get('admin/articles/edit/{id}', 'ArticlesController@edit');
 Route::post('admin/articles/update/{id}', 'ArticlesController@update');
 Route::get('admin/articles/view/{id}', 'ArticlesController@display');
+
+
+
+
+
+Route::group(['prefix' => '/admin/authors'], function () {
+
+    Route::get('', 'AuthorsController@index');
+    Route::get('create', 'AuthorsController@create');
+    Route::post('store', 'AuthorsController@store');
+    Route::get('delete/{id}', 'AuthorsController@delete');
+    Route::get('edit/{id}', 'AuthorsController@edit');
+    Route::post('update/{id}', 'AuthorsController@update');
+});
+
+Route::group(['prefix' => '/admin/nationalities'], function () {
+
+    Route::get('', 'NationalitiesController@index');
+    Route::get('create', 'NationalitiesController@create');
+    Route::post('store', 'NationalitiesController@store');
+    Route::get('delete/{id}', 'NationalitiesController@delete');
+    Route::get('edit/{id}', 'NationalitiesController@edit');
+    Route::post('update/{id}', 'NationalitiesController@update');
+});
+
+Route::get('admin/errors-log', 'ErrorsLogController@index');
+
+
+
+
+
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');
+
+

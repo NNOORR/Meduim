@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticlesController extends BaseController
 {
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -61,7 +62,9 @@ class ArticlesController extends BaseController
 
             if ($article) {
                 // Get uploaded images ..
+                dd($req);
                 $imgs = $req->allFiles()['articleImgs'];
+                dd('xx');
                 foreach ($imgs as $img) {
                     $path = $img->store('public/uploads');
                     Attachment::saveRecord([
@@ -166,6 +169,7 @@ class ArticlesController extends BaseController
 
 
             if ($article) {
+
                 // delete article's tags
                 $article->tags()->delete();
                 // delete article attachments

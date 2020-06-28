@@ -248,6 +248,42 @@ return [
            // 'label'       => 4,
            // 'label_color' => 'success',
         ],
+        [
+            'text'    => 'Indexes',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Authors',
+                    'icon_color' => 'cyan',
+                    'url'  => 'admin/authors',
+                ],
+                [
+                    'text'    => 'Nationalities',
+                    'icon_color' => 'cyan',
+                    'url'     => 'admin/nationalities',
+                ]
+            ],
+        ],
+        [
+            'text'    => 'Settings',
+            'icon'    => 'fas fa-fw fa-lock',
+            'submenu' => [
+                [
+                    'text' => 'Errors log',
+                    'icon_color' => 'red',
+                    'url'  => 'admin/errors-log',
+                ],
+                [
+                    'text'    => 'User Management',
+                    'icon_color' => 'cyan',
+                    'url'     => '#',
+                ]
+            ],
+        ],
+
+
+
+/*
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -312,7 +348,7 @@ return [
             'text'       => 'information',
             'icon_color' => 'cyan',
             'url'        => '#',
-        ],
+        ],*/
     ],
 
     /*

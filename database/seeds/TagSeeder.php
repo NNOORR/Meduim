@@ -16,7 +16,7 @@ class TagSeeder extends Seeder
 
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             \App\Models\Tag::create([
                 'article_id' => $faker->numberBetween(1, 10),
                 'name' => Str::random(4)
