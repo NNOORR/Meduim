@@ -63,9 +63,7 @@ class ArticlesController extends BaseController
 
             if ($article) {
                 // Get uploaded images ..
-                dd($req);
                 $imgs = $req->allFiles()['articleImgs'];
-                dd('xx');
                 foreach ($imgs as $img) {
                     $path = $img->store('public/uploads');
                     Attachment::saveRecord([
