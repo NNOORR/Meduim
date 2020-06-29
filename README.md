@@ -9,77 +9,46 @@
 
 ## About The Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Meduim is a platform for publishing and managing articles, created using Laravel7 as a BackEnd admin panel and VueJS as a frontEnd single page application, so it has smoothly surfing and navigation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Dependencies
+You need to have on your local machine the following things:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **composer** to build the project and download the needed packages
+you can download it easily from this site: https://getcomposer.org/
 
-## Learning Laravel
+- **npm** Node package Manager to install all needed packages
+You can download it easily from this site: https://nodejs.org/en/download/
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Installation instructions
+Clone the project to your local machine and put it into your server directory like (WAMP or XAMP) for example in "www" folder
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Establishing the Database for the project
+You need to create an empty database called "meduim"
 
-### Premium Partners
+## Build he project
+After you cloned the project you should access to the project directory and run the following command using command prompt, and be patient because this step would take awhile
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
+- **composer install** to install all necessary packages for laravel
+- **npm install** to install all necessary packages to vueJS
+- **php artisan migrate --seed** to migrate all tables to your database and fill them by generated and random info for the test purposes
 
-### Community Sponsors
+## Run the project
+Now, to run the project you need to run the following command in project directory using command prompt
 
-<a href="https://op.gg"><img src="http://opgg-static.akamaized.net/icon/t.rectangle.png" width="150"></a>
+- **php artisan serv** to run the project
 
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [云软科技](http://www.yunruan.ltd/)
+## Project details
+The project contains two-sides BackEnd admin panel and FrontEnd.
+ 
+To browse your lovely backend(Laravel) you should go to the following route
+- **http://localhost:8000/admin** to visit admin panel
 
-## Contributing
+Here in backEnd you can manage your articles (add, edit, delete and view), also you can manage the authors information of the articles and their nationalities, and you can add images and tags to the articles easily and preview then in lovely way.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+To browse your lovely frontend(VueJs) you should go to the following route
+- **http://localhost:8000** to visit admin panel
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Here in frontEnd you can preview all articles by descending added order in depending on the (preview_count) of each article i.e the count of visiting the article by visitors. 
