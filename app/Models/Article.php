@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    protected $fillable = ['title','brief','description', 'author_id'];
+    protected $fillable = ['title','brief','description', 'author_id', 'preview_count'];
 
     /**
      * @return array
@@ -38,6 +38,19 @@ class Article extends Model
     public function tags()
     {
         return $this->hasMany(Tag::class);
+    }
+
+    public function toArray()
+    {
+        $data = [];
+        $data['id'] = $this->id;
+        $data['title'] = $this->title;
+        $data['brief'] = $this->brief;
+        $data['description'] = $this->description;
+        $data['author_id'] = $this->author_id;
+        $data['preview_count'] = $this->preview_count;
+
+        return $data;
     }
 
     /**

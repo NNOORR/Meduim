@@ -36,25 +36,6 @@
                 </nav>
             </div>
 
-            <div style="width: 300px; height: 50px; float: right" class="mr-100">
-                <!-- Search form -->
-                <form @submit.prevent=""
-                      class="form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2 mt-2"
-                      style="width: 300px;">
-                    <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-                         xmlns="http://www.w3.org/2000/svg"
-                         @click="fetchArticles()">
-                        <path fill-rule="evenodd"
-                              d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z"
-                              clip-rule="evenodd"/>
-                        <path fill-rule="evenodd"
-                              d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"
-                              clip-rule="evenodd"/>
-                    </svg>
-                    <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
-                           aria-label="Search" v-model="meta_search.search_key" v-on:keyup.enter="fetchArticles()">
-                </form>
-            </div>
         </div>
 
         <div class="clearfix"></div>
@@ -64,15 +45,16 @@
              style="max-height: 362px; height: 362px; width:240px; max-width: 240px" v-for="(article, index) in articles"
              v-bind:key="article.id">
             <h4 style="text-align: center">{{ article.title }}</h4>
-            <h4 style="text-align: center">{{ article.brief }}</h4>
+            <h4 style="text-align: center">{{ article.created_at }}</h4>
             <!--<img @click="openModal(index)" v-bind:src="photo.path"
                  style="cursor: pointer; max-height: 188px; max-width: 200px; height: 188px; width: 200px;"/>-->
-            <p class="mt-1" style="height: 75px; max-height:75px; overflow-y: auto">{{ article.description}} </p>
-            <p class="mt-1" style="height: 75px; max-height:75px; overflow-y: auto">{{ article.author_name}} </p>
-            <p class="mt-1" style="height: 75px; max-height:75px; overflow-y: auto">{{ article.preview_count}} </p>
+            <p class="mt-1" style="height: 75px; max-height:75px; overflow-y: auto">{{ article.brief}} </p>
+            <p class="mt-1" style="height: 75px; max-height:75px; overflow-y: auto">Read By: {{ article.preview_count}} </p>
             <div>
                 <ul style="list-style: none; padding: 0px;">
-                    <li><span title="favorite"><svg @click="setMediaFav(photo.id)" class="bi bi-star" width="1em"
+                  <router-link class="nav-link" v-bind:to="'/article/' + article.id">View</router-link>
+                    <li><span title="favorite">
+                        <svg @click="article/1" class="bi bi-star" width="1em"
                                                     height="1em" viewBox="0 0 16 16" fill="currentColor"
                                                     xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
