@@ -20758,23 +20758,20 @@ var render = function() {
         attrs: { id: "carouselExampleIndicators", "data-ride": "carousel" }
       },
       [
-        _vm._l(_vm.attachments, function(attachment, index) {
-          return _c(
-            "ol",
-            {
-              staticClass: "carousel-indicators",
-              class: [{ active: index == 0 }]
-            },
-            [
-              _c("li", {
-                attrs: {
-                  "data-target": "#carouselExampleIndicators",
-                  "data-slide-to": index
-                }
-              })
-            ]
-          )
-        }),
+        _c(
+          "ol",
+          { staticClass: "carousel-indicators" },
+          _vm._l(_vm.attachments, function(attachment, index) {
+            return _c("li", {
+              class: [{ active: index == 0 }],
+              attrs: {
+                "data-target": "#carouselExampleIndicators",
+                "data-slide-to": index
+              }
+            })
+          }),
+          0
+        ),
         _vm._v(" "),
         _c(
           "div",
@@ -20797,8 +20794,7 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _vm._m(1)
-      ],
-      2
+      ]
     ),
     _vm._v(" "),
     _c("hr"),

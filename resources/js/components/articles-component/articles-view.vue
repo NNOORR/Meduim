@@ -29,8 +29,8 @@
 
         <hr/>
         <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
-            <ol v-for="(attachment, index) in attachments" class="carousel-indicators" v-bind:class="[{active: index == 0}]">
-                <li data-target="#carouselExampleIndicators" v-bind:data-slide-to="index" ></li>
+            <ol  class="carousel-indicators">
+                <li v-for="(attachment, index) in attachments" data-target="#carouselExampleIndicators" v-bind:data-slide-to="index"  v-bind:class="[{active: index == 0}]"></li>
             </ol>
             <div class="carousel-inner">
                 <div v-for="(attachment, index) in attachments" class="carousel-item" v-bind:class="[{active: index == 0}]">
