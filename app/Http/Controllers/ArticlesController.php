@@ -22,7 +22,8 @@ class ArticlesController extends BaseController
     function index()
     {
         $articles = Article::getArticles();
-        return view('pages.articles.index', compact('articles'));
+        $pagination = $articles->jsonSerialize();
+        return view('pages.articles.index', compact('articles', 'pagination'));
     }
 
 

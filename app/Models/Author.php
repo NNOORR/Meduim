@@ -31,7 +31,7 @@ class Author extends Model
     }
 
     static function getAuthors(){
-        return Author::all()->sortDesc();
+        return Author::orderBy('id', 'desc')->paginate(4);
     }
 
     /**

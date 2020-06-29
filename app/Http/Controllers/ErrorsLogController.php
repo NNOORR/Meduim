@@ -27,7 +27,8 @@ class ErrorsLogController extends BaseController
     function index()
     {
         $errorsLog = ErrorsLog::getErrosLog();
-        return view('pages.errors-log.index', compact('errorsLog'));
+        $pagination = $errorsLog->jsonSerialize();
+        return view('pages.errors-log.index', compact('errorsLog', 'pagination'));
     }
 
 }

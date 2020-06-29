@@ -6,6 +6,23 @@
     <!-- Button trigger modal -->
     <a class="btn btn-primary btn-md m-1" href="/admin/authors/create">Add Author</a>
 
+    <hr/>
+    <div style="width: 100px; height: 50px; float: left;">
+        <nav aria-label="Page navigation example">
+            <div style=" width: 250px; display: inline-block;">
+                <ul class="pagination" style="width: 250px;">
+                    <li class="{{!$pagination['prev_page_url'] ? 'disabled' : ''}} page-item"><a
+                                class="page-link"
+                                href="{{$pagination['prev_page_url']}}">Previous</a></li>
+                    <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{
+                                $pagination['current_page']}} of {{ $pagination['last_page'] }}</a></li>
+                    <li class="{{!$pagination['next_page_url'] ? 'disabled' : ''}} page-item" ><a
+                                class="page-link"
+                                href="{{$pagination['next_page_url']}}">Next</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
 
     <table id="example1" class="table shadow p-3 mb-5 bg-white rounded">
         <thead class="thead-dark " >

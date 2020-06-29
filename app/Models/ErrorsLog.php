@@ -10,7 +10,7 @@ class ErrorsLog extends Model
     protected $fillable = ['message','file', 'line','trace','err_code'];
 
     static function getErrosLog(){
-        return ErrorsLog::all()->sortDesc();
+        return ErrorsLog::orderBy('id', 'desc')->paginate(4);
     }
 
 

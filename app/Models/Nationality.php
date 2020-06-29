@@ -20,7 +20,7 @@ class Nationality extends Model
 
 
     static function getNationalities(){
-        return Nationality::all()->sortDesc();
+        return Nationality::orderBy('id', 'desc')->paginate(4);
     }
 
     /**

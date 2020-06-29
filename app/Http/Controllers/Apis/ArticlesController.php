@@ -18,10 +18,10 @@ class ArticlesController extends BaseApiController
 
         try {
             if (isset($request->search_key) and !empty($request->search_key)) {
-                $articles = Article::where('name', 'like', '%' . $request->search_key . '%')->paginate(4);
+                $articles = Article::where('name', 'like', '%' . $request->search_key . '%')->orderBy('id', 'desc')->paginate(4);
 
             } else
-                $articles = Article::paginate(4);
+                $articles = Article::orderBy('id', 'desc')->paginate(4);
 
               return self::output(1, null, self::SUCCESS_CODE, $articles);
         }

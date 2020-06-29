@@ -25,7 +25,8 @@ class AuthorsController extends BaseController
     function index()
     {
         $authors = Author::getAuthors();
-        return view('pages.authors.index', compact('authors'));
+        $pagination = $authors->jsonSerialize();
+        return view('pages.authors.index', compact('authors', 'pagination'));
     }
 
 

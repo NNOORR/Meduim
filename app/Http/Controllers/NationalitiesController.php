@@ -26,7 +26,8 @@ class NationalitiesController extends BaseController
     function index()
     {
         $nationalities = Nationality::getNationalities();
-        return view('pages.nationalities.index', compact('nationalities'));
+        $pagination = $nationalities->jsonSerialize();
+        return view('pages.nationalities.index', compact('nationalities', 'pagination'));
     }
 
 

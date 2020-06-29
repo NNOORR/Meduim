@@ -22,7 +22,7 @@ class Article extends Model
     }
 
     static function getArticles(){
-        return Article::all()->sortDesc();
+        return Article::orderBy('id', 'desc')->paginate(4);
     }
 
     public function author()
